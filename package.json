@@ -21,5 +21,16 @@
   "devDependencies": {
     "neutrino": "^5.9.0",
     "neutrino-preset-web": "^5.9.0"
+  },
+  "neutrino": {
+    "options": {
+      "compile": {
+        "targets": {
+          "browsers": [
+            "last 1 version"
+          ]
+        }
+      }
+    }
   }
 }

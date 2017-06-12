@@ -1,0 +1,24 @@
+{
+  "name": "autoplay-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vnglst/autoplay-tutorial.git"
+  },
+  "keywords": [],
+  "author": "Koen van Gilst <koen.vangilst@gmail.com> (http://koenvangilst.nl)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vnglst/autoplay-tutorial/issues"
+  },
+  "homepage": "https://github.com/vnglst/autoplay-tutorial#readme",
+  "devDependencies": {
+    "neutrino": "^5.9.0",
+    "neutrino-preset-web": "^5.9.0"
+  }
+}

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "neutrino start --use neutrino-preset-web",
+    "build": "neutrino build --use neutrino-preset-web"
   },
   "repository": {
     "type": "git",

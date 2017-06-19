@@ -1,3 +1,5 @@
+import './style.css'
+
 /*
   Autoplaying audio/video files on various browser
 
@@ -57,6 +59,7 @@
 // const btn = document.createElement('BUTTON')
 // const textLabel = document.createTextNode('Play')
 // const audio = new window.Audio()
+// audio.controls = true
 
 // btn.appendChild(textLabel)
 // document.getElementById('root').appendChild(btn)
@@ -79,6 +82,7 @@
 // const audio = new window.Audio()
 // audio.src =
 //   'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+// audio.controls = true
 
 // btn.appendChild(textLabel)
 // document.getElementById('root').appendChild(btn)
@@ -110,6 +114,7 @@ const textLabel = document.createTextNode('Play')
 const audio = new window.Audio()
 audio.src =
   'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+audio.controls = true
 
 btn.appendChild(textLabel)
 document.getElementById('root').appendChild(btn)

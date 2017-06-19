@@ -1,0 +1,10 @@
+#root {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#root audio {
+    margin-top: 50px;
+}

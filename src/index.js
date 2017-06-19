@@ -52,7 +52,7 @@ import './style.css'
 // }
 
 /*
-    The call stack, this works too 👍
+    Call stack, this works too 👍
 
 */
 
@@ -73,7 +73,8 @@ import './style.css'
 // }
 
 /*
-    The call stack, but this doesn't work 💩
+    Call stack, using a fake Promise. This works too 👍
+    https://jsfiddle.net/vnglst/q4d6eozj/
 
 */
 
@@ -81,31 +82,30 @@ import './style.css'
 // const textLabel = document.createTextNode('Play')
 // const audio = new window.Audio()
 // audio.src =
-//   'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+//   'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/modem-sound.mp3'
 // audio.controls = true
 
 // btn.appendChild(textLabel)
 // document.getElementById('root').appendChild(btn)
 // document.getElementById('root').appendChild(audio)
 
-// btn.onclick = e => {
-//   audio.play()
-//   audio.pause()
-//   window
-//     .fetch(
-//       `https://api.github.com/repos/vnglst/autoplay-tutorial/contents/mp3/modem-sound.mp3`
-//     )
-//     .then(resp => resp.json())
-//     .then(json => {
-//       console.log(json.download_url)
-//       audio.src = json.download_url
-//       audio.play()
-//     })
+// const mockedPromise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     const src = 'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+//     return resolve(src)
+//   }, 500)
+// })
+
+// btn.onclick = (e) => {
+//   mockedPromise.then(src => {
+//     audio.src = src
+//     audio.play()
+//   })
 // }
 
 /*
-    How to fix this: start playing a different audio source and pause it immediately.
-    The set new source and start playback, all fine and good! 🕺
+    Call stack, but this doesn't work 💩
+    https://jsfiddle.net/vnglst/f702pyw1/
 
 */
 
@@ -121,9 +121,6 @@ document.getElementById('root').appendChild(btn)
 document.getElementById('root').appendChild(audio)
 
 btn.onclick = e => {
-  // To fix playback, start and pauze audio with a different source, before initiating request
-  audio.play()
-  audio.pause()
   window
     .fetch(
       `https://api.github.com/repos/vnglst/autoplay-tutorial/contents/mp3/modem-sound.mp3`
@@ -134,3 +131,35 @@ btn.onclick = e => {
       audio.play()
     })
 }
+
+/*
+    How to fix this: start playing a different audio source and pause it immediately.
+    The set new source and start playback, all fine and good! 🕺
+
+*/
+
+// const btn = document.createElement('BUTTON')
+// const textLabel = document.createTextNode('Play')
+// const audio = new window.Audio()
+// audio.src =
+//   'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+// audio.controls = true
+
+// btn.appendChild(textLabel)
+// document.getElementById('root').appendChild(btn)
+// document.getElementById('root').appendChild(audio)
+
+// btn.onclick = e => {
+//   // To fix playback, start and pauze audio with a different source, before initiating request
+//   audio.play()
+//   audio.pause()
+//   window
+//     .fetch(
+//       `https://api.github.com/repos/vnglst/autoplay-tutorial/contents/mp3/modem-sound.mp3`
+//     )
+//     .then(resp => resp.json())
+//     .then(json => {
+//       audio.src = json.download_url
+//       audio.play()
+//     })
+// }

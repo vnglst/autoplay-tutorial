@@ -19,18 +19,7 @@
   },
   "homepage": "https://github.com/vnglst/autoplay-tutorial#readme",
   "devDependencies": {
-    "neutrino": "^5.9.0",
-    "neutrino-preset-web": "^5.9.0"
-  },
-  "neutrino": {
-    "options": {
-      "compile": {
-        "targets": {
-          "browsers": [
-            "last 1 version"
-          ]
-        }
-      }
-    }
+    "neutrino": "^6.0.2",
+    "neutrino-preset-web": "^6.0.2"
   }
 }

@@ -1,4 +1,4 @@
-import './style.css'
+import './index.css'
 
 /*
   Autoplaying audio/video files on various browser
@@ -109,28 +109,28 @@ import './style.css'
 
 */
 
-const btn = document.createElement('BUTTON')
-const textLabel = document.createTextNode('Play')
-const audio = new window.Audio()
-audio.src =
-  'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
-audio.controls = true
+// const btn = document.createElement('BUTTON')
+// const textLabel = document.createTextNode('Play')
+// const audio = new window.Audio()
+// audio.src =
+//   'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+// audio.controls = true
 
-btn.appendChild(textLabel)
-document.getElementById('root').appendChild(btn)
-document.getElementById('root').appendChild(audio)
+// btn.appendChild(textLabel)
+// document.getElementById('root').appendChild(btn)
+// document.getElementById('root').appendChild(audio)
 
-btn.onclick = e => {
-  window
-    .fetch(
-      `https://api.github.com/repos/vnglst/autoplay-tutorial/contents/mp3/modem-sound.mp3`
-    )
-    .then(resp => resp.json())
-    .then(json => {
-      audio.src = json.download_url
-      audio.play()
-    })
-}
+// btn.onclick = e => {
+//   window
+//     .fetch(
+//       `https://api.github.com/repos/vnglst/autoplay-tutorial/contents/mp3/modem-sound.mp3`
+//     )
+//     .then(resp => resp.json())
+//     .then(json => {
+//       audio.src = json.download_url
+//       audio.play()
+//     })
+// }
 
 /*
     How to fix this: start playing a different audio source and pause it immediately.
@@ -163,3 +163,29 @@ btn.onclick = e => {
 //       audio.play()
 //     })
 // }
+
+/*
+  Setting currentTime for audio/video files works on Chrome/Firefox
+  But fails silently on Safari
+  And fails horribly on IE11
+
+*/
+
+const btn = document.createElement('BUTTON')
+const textLabel = document.createTextNode('Play')
+const audio = new window.Audio()
+audio.controls = true
+
+btn.appendChild(textLabel)
+document.getElementById('root').appendChild(btn)
+document.getElementById('root').appendChild(audio)
+
+btn.onclick = (e) => {
+  audio.src = 'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+  audio.currentTime = 3.50 // llama's ass
+  audio.play().then(() => { console.log('succes') }).catch(e => { console.log(e) })
+}
+
+audio.addEventListener('timeupdate', (e) => {
+  console.log(audio.currentTime)
+})

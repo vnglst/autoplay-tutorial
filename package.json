@@ -1,25 +1,18 @@
 {
-  "name": "autoplay-tutorial",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "neutrino start --use neutrino-preset-web",
-    "build": "neutrino build --use neutrino-preset-web"
+  "name": "autoplay",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vnglst/autoplay-tutorial.git"
-  },
-  "keywords": [],
-  "author": "Koen van Gilst <koen.vangilst@gmail.com> (http://koenvangilst.nl)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/vnglst/autoplay-tutorial/issues"
-  },
-  "homepage": "https://github.com/vnglst/autoplay-tutorial#readme",
   "devDependencies": {
-    "neutrino": "^6.0.2",
-    "neutrino-preset-web": "^6.0.2"
+    "react-scripts": "1.0.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }

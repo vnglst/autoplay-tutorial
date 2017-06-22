@@ -150,9 +150,9 @@ import './index.css'
 // document.getElementById('root').appendChild(audio)
 
 // btn.onclick = e => {
-//   // To fix playback, start and pauze audio with a different source, before initiating request
-//   audio.play()
-//   audio.pause()
+//   // To fix playback, load the audio with a different source, before initiating request
+//   // Changing the source later is not a problem for autoplaying
+//   audio.load()
 //   window
 //     .fetch(
 //       `https://api.github.com/repos/vnglst/autoplay-tutorial/contents/mp3/modem-sound.mp3`
@@ -166,26 +166,121 @@ import './index.css'
 
 /*
   Setting currentTime for audio/video files works on Chrome/Firefox
-  But fails silently on Safari
-  And fails horribly on IE11
+  Fails silently on Safari 💩
+  Fails horribly on <= IE11 (InvalidStateError) 💩💩
+
+*/
+
+// const btn = document.createElement('BUTTON')
+// const textLabel = document.createTextNode('Play')
+// const audio = new window.Audio()
+// audio.controls = true
+
+// btn.appendChild(textLabel)
+// document.getElementById('root').appendChild(btn)
+// document.getElementById('root').appendChild(audio)
+
+// btn.onclick = (e) => {
+//   audio.src = 'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+//   audio.currentTime = 3.50 // llama's ass
+//   audio.play().then(() => { console.log('succes') }).catch(e => { console.log(e) })
+// }
+
+/*
+  Setting currentTime for audio/video workaround for Safari + IE
+  The following works for IE and Safari <= 11
+  To make it work on Safari Mobile & Safari >= 11 you have to preload the new audio src
+*/
+
+// const btn = document.createElement('BUTTON')
+// const textLabel = document.createTextNode('Play')
+// const audio = new window.Audio()
+// audio.controls = true
+
+// btn.appendChild(textLabel)
+// document.getElementById('root').appendChild(btn)
+// document.getElementById('root').appendChild(audio)
+
+// let setCurrentTimeTo = false
+
+// btn.onclick = e => {
+//   audio.src =
+//     'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
+//   setCurrentTimeTo = 3.5 // llama's ass
+//   audio.load() // preload audio file to avoid autoplay issues in loadedmetadata event handler
+// }
+
+// audio.addEventListener('loadedmetadata', e => {
+//   console.log('loaded metadata')
+//   if (setCurrentTimeTo !== false) {
+//     audio.currentTime = setCurrentTimeTo
+//     const playPromise = audio.play()
+//     if (playPromise !== undefined) {
+//       playPromise
+//         .then(() => {
+//           console.log('succesfully started playback')
+//         })
+//         .catch(e => {
+//           console.error('Error starting playback', e)
+//         })
+//     }
+//   }
+//   setCurrentTimeTo = false
+// })
+
+/*
+    Combining the two issues above:
+        - fetching a new url from a external source
+        - setting new currentTime when metadata has loaded
+        - starting play without causing autoplay issues
+
+    It works! 🕺🕺🕺
 
 */
 
 const btn = document.createElement('BUTTON')
 const textLabel = document.createTextNode('Play')
 const audio = new window.Audio()
+audio.src =
+  'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
 audio.controls = true
 
 btn.appendChild(textLabel)
 document.getElementById('root').appendChild(btn)
 document.getElementById('root').appendChild(audio)
 
-btn.onclick = (e) => {
-  audio.src = 'https://raw.githubusercontent.com/vnglst/autoplay-tutorial/master/mp3/winamp.mp3'
-  audio.currentTime = 3.50 // llama's ass
-  audio.play().then(() => { console.log('succes') }).catch(e => { console.log(e) })
+let setCurrentTimeTo = false
+
+btn.onclick = e => {
+  // To fix playback, load the audio with a different source, before initiating request
+  // Changing the source later is not a problem for autoplaying
+  audio.load()
+  window
+    .fetch(
+      `https://api.github.com/repos/vnglst/autoplay-tutorial/contents/mp3/modem-sound.mp3`
+    )
+    .then(resp => resp.json())
+    .then(json => {
+      audio.src = json.download_url
+      setCurrentTimeTo = 5.0 // skip dial tone, skip to modem symphony
+      audio.load()
+    })
 }
 
-audio.addEventListener('timeupdate', (e) => {
-  console.log(audio.currentTime)
+audio.addEventListener('loadedmetadata', e => {
+  console.log('loaded metadata')
+  if (setCurrentTimeTo !== false) {
+    audio.currentTime = setCurrentTimeTo
+    const playPromise = audio.play()
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log('succesfully started playback')
+        })
+        .catch(e => {
+          console.error('Error starting playback', e)
+        })
+    }
+    setCurrentTimeTo = false
+  }
 })
